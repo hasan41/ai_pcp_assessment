@@ -3,23 +3,31 @@ import ChatInterface from './components/ChatInterface'
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4">
-      <div className="mb-8 text-center">
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">AI Primary Care Assessment</h1>
-        <p className="text-gray-500 max-w-md">
-          A prototype for automated patient triage and symptom analysis.
-        </p>
+    <div className="h-[100dvh] w-full bg-slate-50 flex flex-col overflow-hidden relative selection:bg-blue-100">
+
+      {/* Background Gradients */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-100/40 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-indigo-100/40 rounded-full blur-3xl"></div>
       </div>
 
-      <ChatInterface />
+      {/* Main Layout Container */}
+      <div className="relative z-10 flex-1 flex flex-col w-full max-w-[1600px] mx-auto p-2 sm:p-4 lg:p-6 h-full min-h-0">
 
-      <div className="mt-8 text-xs text-gray-400 max-w-xl text-center">
-        <p className="font-semibold text-red-400 mb-1">DISCLAIMER: DEMO PURPOSE ONLY</p>
-        <p>
-          This is an AI prototype and does not provide real medical advice.
-          If you are experiencing a medical emergency, please call 911 (or your local emergency number).
-        </p>
+        {/* Chat Main Area - Flex-1 to fill space, min-h-0 to allow scrolling inside */}
+        <main className="flex-1 w-full min-h-0 shadow-2xl rounded-2xl overflow-hidden bg-white ring-1 ring-gray-100 flex flex-col">
+          <ChatInterface />
+        </main>
+
+        {/* Footer Disclaimer */}
+        <footer className="flex-none pt-3 pb-1 text-center">
+          <p className="text-xs text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            <span className="font-semibold text-gray-500">Medical Disclaimer:</span> This AI system can make mistakes. It does not provide medical advice.
+            <span className="block sm:inline sm:ml-1 font-medium text-red-400/80">If you have an emergency, call 911 immediately.</span>
+          </p>
+        </footer>
       </div>
+
     </div>
   )
 }

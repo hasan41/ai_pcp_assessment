@@ -59,50 +59,71 @@ const ChatInterface = () => {
     };
 
     return (
-        <div className="flex flex-col h-[600px] w-full max-w-2xl bg-gray-50 rounded-xl shadow-xl overflow-hidden border border-gray-200">
+        <div className="h-full w-full flex flex-col bg-white relative">
 
-            {/* Header */}
-            <div className="bg-white p-4 border-b border-gray-200 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
-                    <span className="font-semibold text-gray-700">Dr. AI Component</span>
+            {/* Chat UI Header - Minimal */}
+            <div className="flex-none bg-white px-6 py-4 border-b border-gray-100 flex items-center justify-between z-20 relative shadow-[0_2px_8px_-4px_rgba(0,0,0,0.05)]">
+                <div className="flex items-center gap-3">
+                    <div className="relative">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-100 to-indigo-50 flex items-center justify-center text-blue-600 font-bold shadow-inner">
+                            AI
+                        </div>
+                        <div className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-white ring-1 ring-emerald-100"></div>
+                    </div>
+                    <div>
+                        <div className="font-bold text-gray-800 text-sm">Dr. AI Assistant</div>
+                        <div className="text-[11px] text-emerald-600 font-medium flex items-center gap-1.5">
+                            <span className="relative flex h-1.5 w-1.5">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+                            </span>
+                            Active Now
+                        </div>
+                    </div>
                 </div>
-                <span className="text-xs text-gray-400">Automated Triage System</span>
             </div>
 
-            {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-4">
+            {/* Messages Area - Scrollable */}
+            <div className="flex-1 overflow-y-auto px-4 sm:px-8 py-6 space-y-6 scroll-smooth bg-gray-50/30">
                 {messages.map((msg, idx) => (
                     <ChatMessage key={idx} role={msg.role} content={msg.content} />
                 ))}
+
                 {isLoading && (
-                    <div className="flex justify-start mb-4">
-                        <div className="bg-white px-5 py-3 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-2">
-                            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-75"></div>
-                            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-150"></div>
-                            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-300"></div>
+                    <div className="flex justify-start mb-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                        <div className="bg-white px-5 py-3 rounded-2xl rounded-tl-sm shadow-sm border border-gray-100 flex items-center gap-1.5">
+                            <span className="text-xs text-gray-400 mr-2 font-medium">Analyzing</span>
+                            <div className="flex gap-1">
+                                <span className="w-1.5 h-1.5 bg-blue-400/60 rounded-full animate-bounce delay-0"></span>
+                                <span className="w-1.5 h-1.5 bg-blue-400/60 rounded-full animate-bounce delay-150"></span>
+                                <span className="w-1.5 h-1.5 bg-blue-400/60 rounded-full animate-bounce delay-300"></span>
+                            </div>
                         </div>
                     </div>
                 )}
                 <div ref={messagesEndRef} />
             </div>
 
-            {/* Input Area */}
-            <div className="bg-white p-4 border-t border-gray-200">
-                <form onSubmit={sendMessage} className="flex gap-2">
-                    <input
-                        type="text"
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
-                        placeholder="Type your symptoms here..."
-                        className="flex-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-                    />
+            {/* Input Area - Fixed at bottom of container */}
+            <div className="bg-white p-4 sm:p-5 border-t border-gray-100">
+                <form onSubmit={sendMessage} className="relative flex gap-2 items-center max-w-4xl mx-auto">
+                    <div className="flex-1 relative">
+                        <input
+                            type="text"
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            placeholder="Type your symptoms here..."
+                            className="w-full pl-5 pr-4 py-4 bg-gray-100/50 border-0 rounded-2xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 transition-all text-gray-700 placeholder:text-gray-400 text-base shadow-inner"
+                        />
+                    </div>
                     <button
                         type="submit"
                         disabled={isLoading || !input.trim()}
-                        className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        className="h-[56px] px-6 bg-gray-900 text-white font-medium rounded-xl hover:bg-black disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-gray-900 transition-all shadow-md active:scale-95 flex items-center justify-center"
                     >
-                        Send
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                            <path d="M3.478 2.404a.75.75 0 00-.926.941l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.404z" />
+                        </svg>
                     </button>
                 </form>
             </div>

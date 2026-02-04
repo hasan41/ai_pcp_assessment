@@ -1,22 +1,22 @@
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
 
 const ChatMessage = ({ role, content }) => {
     const isAi = role === 'assistant';
 
     return (
-        <div className={`flex w-full ${isAi ? 'justify-start' : 'justify-end'} mb-4`}>
+        <div className={`flex w-full ${isAi ? 'justify-start' : 'justify-end'} mb-2 group`}>
             <div
-                className={`max-w-[80%] rounded-2xl px-5 py-3 shadow-sm ${isAi
-                        ? 'bg-white text-gray-800 border border-gray-100'
-                        : 'bg-blue-600 text-white'
+                className={`max-w-[85%] sm:max-w-[75%] rounded-2xl px-6 py-4 shadow-sm text-base transition-all duration-300 ${isAi
+                        ? 'bg-white text-gray-800 border border-gray-100 rounded-tl-sm shadow-md group-hover:shadow-lg'
+                        : 'bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-tr-sm shadow-blue-500/20 shadow-lg'
                     }`}
             >
-                <div className={`text-xs font-semibold mb-1 ${isAi ? 'text-blue-600' : 'text-blue-100'}`}>
-                    {isAi ? 'Dr. AI' : 'You'}
-                </div>
+                {!isAi && <div className="text-[10px] text-blue-100 uppercase tracking-wider mb-1 font-bold">You</div>}
+                {isAi && <div className="text-[10px] text-gray-400 uppercase tracking-wider mb-1 font-bold flex items-center gap-1">
+                    <span className="text-blue-500">Dr. AI</span>
+                </div>}
+
                 <div className="prose prose-sm max-w-none leading-relaxed">
-                    {/* Use strict markdown rendering or just simple text preserving whitespace */}
                     <div className="whitespace-pre-wrap">{content}</div>
                 </div>
             </div>
